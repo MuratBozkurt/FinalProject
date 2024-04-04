@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,73 +24,25 @@ namespace DataAccess.Concrete.InMemory
             };
         }
 
-        //public void Add(Product entity)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void Delete(Product entity)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Product Get(Expression<Func<Product, bool>> filter)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void Update(Product entity)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        void Add(Product product)
+    
+        
+        public void Add(Product product)
         {
             _products.Add(product);
         }
 
-        void IEntityRepository<Product>.Add(Product entity)
-        {
-            throw new NotImplementedException();
-        }
 
-        void Delete(Product product)
-        {
-            Product product2Delete = _products.SingleOrDefault(x => x.ProductId == product.ProductId);
-            _products.Remove(product2Delete);
-        }
-
-        void IEntityRepository<Product>.Delete(Product entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        Product IEntityRepository<Product>.Get(Expression<Func<Product, bool>> filter)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Product> GetAll()
+        public List<Product> GetAll()
         {
             return _products;
         }
 
-        List<Product> IEntityRepository<Product>.GetAll(Expression<Func<Product, bool>> filter)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Product> GetAllByCategory(int CategoryId)
+        public List<Product> GetAllByCategory(int CategoryId)
         {
             return _products.Where(x => x.CategoryId == CategoryId).ToList();            
         }
 
-        void Update(Product product)
+        public void Update(Product product)
         {
             Product updateToProduct = _products.SingleOrDefault(p => p.ProductId == product.ProductId);
             updateToProduct.ProductName = product.ProductName;
@@ -98,7 +52,23 @@ namespace DataAccess.Concrete.InMemory
             updateToProduct.CategoryId= product.CategoryId;            
         }
 
-        void IEntityRepository<Product>.Update(Product entity)
+        public void Delete(Product entity)
+        {
+            Product deletedProdurt = _products.SingleOrDefault(p => p.ProductId==entity.ProductId);
+            _products.Remove(deletedProdurt);
+        }
+
+        Product IEntityRepository<Product>.Get(Expression<Func<Product, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Product> IEntityRepository<Product>.GetAll(Expression<Func<Product, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ProductDetailDTO> GetProductDetails()
         {
             throw new NotImplementedException();
         }
